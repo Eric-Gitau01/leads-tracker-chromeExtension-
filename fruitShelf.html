@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Sorter</title>
+    <style>
+        body {
+            font: 1em sans-serif;
+        }
+        div {
+            margin: 20px auto;
+        }
+        /* Style for the apple shelf */
+        #apple-shelf {
+            background-color: brown;
+            width: 200px;
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        /* Style for the orange shelf */
+        #orange-shelf {
+            background-color: orange;
+            width: 200px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Divs for apple and orange shelves -->
+    <div id="apple-shelf"></div>
+    <div id="orange-shelf"></div>
+
+    <script>
+        // Array of fruits containing apples and oranges
+        let fruit = ["🍎", "🍊", "🍎", "🍎", "🍊", "🍎", "🍊", "🍊"];
+
+        // Get the DOM elements for the apple and orange shelves
+        let appleShelf = document.getElementById("apple-shelf");
+        let orangeShelf = document.getElementById("orange-shelf");
+
+        // Function to sort fruits and display them on the respective shelves
+        function sortFruit() {
+            // Loop through the fruit array
+            for (let i = 0; i < fruit.length; i++) {
+                // Check if the current fruit is an apple
+                if (fruit[i] === "🍎") {
+                    // Append the apple to the apple shelf (use += to avoid overwriting)
+                    appleShelf.textContent += "🍎";
+                }
+                // Check if the current fruit is an orange
+                else if (fruit[i] === "🍊") {
+                    // Append the orange to the orange shelf (use += to avoid overwriting)
+                    orangeShelf.textContent += "🍊";
+                }
+            }
+        }
+
+        // Call the sortFruit function to execute the sorting when the page loads
+        sortFruit();
+    </script>
+</body>
+</html>
+
+<!-- 
+Corrected the loop increment:
+
+Your loop was using 1++, which is invalid. It should be i++ to increment the index properly.
+Appending instead of overwriting:
+
+The original code used appleShelf.textContent = "🍎", which would overwrite the shelf content with each iteration. I updated it to appleShelf.textContent += "🍎" to append the fruit to the existing content.
+Function Call:
+
+I added sortFruit(); at the end so that the function is automatically called when the page loads, sorting the fruits immediately.
+Now the fruits will correctly appear on their respective shelves, and the logic works as intended. -->

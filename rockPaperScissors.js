@@ -6,4 +6,3 @@ function getRandomHand() {
 }
 
 console.log(getRandomHand())
-
