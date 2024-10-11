@@ -1,9 +1,8 @@
-let hand = ["rock", "paper", "scissors"]
+    const recipient = "James";
+    const subject = "Important Update";
+    const email = `Hey  
+                   ${recipient} how are you?
+                   ${subject}`;
 
-function getRandomHand() {
-    let randomNumber = Math.floor(Math.random() * 3)
-    return hand[randomNumber]
-}
-
-console.log(getRandomHand())
+    console.log(email); // Outputs: 'HeyJames how are you?'
 
