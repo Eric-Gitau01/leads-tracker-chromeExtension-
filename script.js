@@ -1,58 +1,64 @@
-let myLeads = []
-const inputEl = document.getElementById("input-el")
-const inputBtn = document.getElementById("input-btn")
-const ulEl = document.getElementById("ul-el")
-const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads"))
-const saveTab = document.getElementById("save-tab")
-console.log(saveTab)
+const leadForm = document.getElementById("lead-form");
+const leadsContainer = document.getElementById("leads-container");
+const toggleTheme = document.getElementById("toggle-theme");
 
-if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage
-    render(myLeads)
+let leads = JSON.parse(localStorage.getItem("leads")) || [];
+
+function saveLeads() {
+    localStorage.setItem("leads", JSON.stringify(leads));
 }
 
-saveTab.addEventListener("click", function() {
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        
-    // })
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        myLeads.push(tabs[0].url)
-        localStorage.setItem("myLeads", JSON.stringify( myLeads))
-        render(myLeads)
-    })
- 
-})
+function renderLeads() {
+    leadsContainer.innerHTML = "";
 
-function render(leads) {
-    let listItems = ''
-    for (let i = 0; i < leads.length; i++){
-        listItems += `
-        <li>
-            <a target='_blank' href='${myLeads[i]}'>
-                ${myLeads[i]}
-            </a>
-        </li>
-        `
-        // const li = document.createElement("li")
-        // li.textContent = myLeads[i]
-        // ulEl.append(li)
-    }
-ulEl.innerHTML = listItems
+    leads.forEach((lead, index) => {
+        const card = document.createElement("div");
+        card.className = "lead-card" + (lead.contacted ? " contacted" : "");
+        card.innerHTML = `
+            <p><strong>Name:</strong> ${lead.name}</p>
+            <p><strong>Email:</strong> ${lead.email}</p>
+            <p><strong>Phone:</strong> ${lead.phone}</p>
+            <p><strong>Source:</strong> ${lead.source}</p>
+            <div class="actions">
+                <button onclick="toggleContacted(${index})">
+                    ${lead.contacted ? "Uncontact" : "Contacted"}
+                </button>
+                <button onclick="deleteLead(${index})">Delete</button>
+            </div>
+        `;
+        leadsContainer.appendChild(card);
+    });
 }
-deleteBtn.addEventListener("dblclick", function() {
-    localStorage.clear()
-    myLeads = []
-    render(myLeads)
-})
 
+leadForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const newLead = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        source: document.getElementById("source").value,
+        contacted: false
+    };
+    leads.push(newLead);
+    saveLeads();
+    renderLeads();
+    leadForm.reset();
+});
 
-inputBtn.addEventListener("click", function(){
-   
-    myLeads.push(inputEl.value)
-    inputEl.value = ''
-    localStorage.setItem("myLeads", JSON.stringify(myLeads))
-    
-    render(myLeads)
-})
+function toggleContacted(index) {
+    leads[index].contacted = !leads[index].contacted;
+    saveLeads();
+    renderLeads();
+}
 
+function deleteLead(index) {
+    leads.splice(index, 1);
+    saveLeads();
+    renderLeads();
+}
+
+toggleTheme.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
+
+renderLeads();

@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lead Tracker</title>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <input type="text" id="input-el">
-    <button id="input-btn">SAVE INPUT</button>
-    <button id="save-tab">SAVE TAB</button>
-    <button id="delete-btn">DELETE ALL</button>
-    <ul id="ul-el"></ul>
+    <header>
+        <h1>Lead Tracker</h1>
+        <button id="toggle-theme">Toggle Light/Dark</button>
+    </header>
+
+    <main>
+        <form id="lead-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required/>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required/>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" required/>
+
+            <label for="source">Source:</label>
+            <select id="source" required>
+                <option value="Website">Website</option>
+                <option value="Referral">Referral</option>
+                <option value="Social Media">Social Media</option>
+            </select>
+
+            <button type="submit">Add Lead</button>
+        </form>
+
+        <section>
+            <h2>Leads</h2>
+            <div id="leads-container"></div>
+        </section>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>
